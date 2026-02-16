@@ -26,7 +26,9 @@ class Ascctl < Formula
   end
 
   def install
-    bin.install Dir["*/ascctl"]
+    candidate = Dir["ascctl", "*/ascctl"].find { |p| File.file?(p) }
+    odie "ascctl binary not found in archive" unless candidate
+    bin.install candidate => "ascctl"
   end
 
   test do
@@ -36,4 +38,3 @@ class Ascctl < Formula
     assert data["ok"]
   end
 end
-
